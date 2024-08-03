@@ -84,18 +84,36 @@ end)
 require("lazy").setup({
     spec = {
         {
-            "rose-pine/neovim",
-            name = "rose-pine",
+            "ellisonleao/gruvbox.nvim",
+            name = "gruvbox",
             config = function()
-                require('rose-pine').setup({
-                    disable_background = true,
+                require("gruvbox").setup({
+                    undercurl = true,
+                    underline = false,
+                    bold = true,
+                    italic = {
+                        strings = false,
+                        emphasis = false,
+                        comments = false,
+                        operators = false,
+                        folds = false,
+                    },
+                    strikethrough = true,
+                    invert_selection = false,
+                    invert_signs = false,
+                    invert_tabline = false,
+                    invert_intend_guides = false,
+                    inverse = true, -- invert background for search, diffs, statuslines and errors
+                    contrast = "", -- can be "hard", "soft" or empty string
+                    palette_overrides = {},
+                    overrides = {},
+                    dim_inactive = false,
+                    transparent_mode = false,
                 })
 
-                vim.cmd("colorscheme rose-pine")
-                color = color or "rose-pine"
-                vim.cmd.colorscheme(color)
-
-            end
+                vim.cmd('colorscheme gruvbox')
+                vim.cmd.colorscheme('gruvbox')
+            end,
         },
         {
             'nvim-telescope/telescope.nvim', tag = '0.1.8',
@@ -204,10 +222,10 @@ require("lazy").setup({
                 })
 
                 local capabilities = vim.tbl_deep_extend(
-                "force",
-                {},
-                vim.lsp.protocol.make_client_capabilities(),
-                cmp_lsp.default_capabilities())
+                    "force",
+                    {},
+                    vim.lsp.protocol.make_client_capabilities(),
+                    cmp_lsp.default_capabilities())
 
                 require("fidget").setup({})
                 require("mason").setup()
@@ -276,8 +294,8 @@ require("lazy").setup({
                         { name = 'nvim_lsp' },
                         { name = 'luasnip' }, -- For luasnip users.
                     }, {
-                        { name = 'buffer' },
-                    })
+                            { name = 'buffer' },
+                        })
                 })
 
                 vim.diagnostic.config({
