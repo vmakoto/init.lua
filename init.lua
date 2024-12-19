@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
             { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-            { out, "WarningMsg" },
+            { out,                            "WarningMsg" },
             { "\nPress any key to exit..." },
         }, true, {})
         vim.fn.getchar()
@@ -61,10 +61,10 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
-vim.keymap.set({"n", "v"}, "<leader>y", [["*y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["*y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
@@ -104,7 +104,7 @@ require("lazy").setup({
                     invert_tabline = false,
                     invert_intend_guides = false,
                     inverse = true, -- invert background for search, diffs, statuslines and errors
-                    contrast = "", -- can be "hard", "soft" or empty string
+                    contrast = "",  -- can be "hard", "soft" or empty string
                     palette_overrides = {},
                     overrides = {},
                     dim_inactive = false,
@@ -116,7 +116,8 @@ require("lazy").setup({
             end,
         },
         {
-            'nvim-telescope/telescope.nvim', tag = '0.1.8',
+            'nvim-telescope/telescope.nvim',
+            tag = '0.1.8',
             -- or                              , branch = '0.1.x',
             dependencies = { 'nvim-lua/plenary.nvim' },
             config = function()
@@ -170,7 +171,7 @@ require("lazy").setup({
                 treesitter_parser_config.templ = {
                     install_info = {
                         url = "https://github.com/vrischmann/tree-sitter-templ.git",
-                        files = {"src/parser.c", "src/scanner.c"},
+                        files = { "src/parser.c", "src/scanner.c" },
                         branch = "master",
                     },
                 }
@@ -222,7 +223,7 @@ require("lazy").setup({
                             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
                         end
 
-                        local opts = {buffer = event.buf, remap = false}
+                        local opts = { buffer = event.buf, remap = false }
 
                         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
@@ -237,6 +238,15 @@ require("lazy").setup({
                         map("<leader>vrr", function() vim.lsp.buf.references() end, '')
                         map("<leader>vrn", function() vim.lsp.buf.rename() end, '')
                         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                            -- 3
+                            buffer = event.buf,
+                            callback = function()
+                                -- 4 + 5
+                                vim.lsp.buf.format { async = false, id = event.data.client_id }
+                            end,
+                        })
                     end,
                 })
 
@@ -276,7 +286,6 @@ require("lazy").setup({
                             })
                             vim.g.zig_fmt_parse_errors = 0
                             vim.g.zig_fmt_autosave = 0
-
                         end,
                         ["lua_ls"] = function()
                             local lspconfig = require("lspconfig")
@@ -313,8 +322,8 @@ require("lazy").setup({
                         { name = 'nvim_lsp' },
                         { name = 'luasnip' }, -- For luasnip users.
                     }, {
-                            { name = 'buffer' },
-                        })
+                        { name = 'buffer' },
+                    })
                 })
 
                 vim.diagnostic.config({
