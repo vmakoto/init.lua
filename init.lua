@@ -48,10 +48,11 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+--vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+--vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
@@ -71,10 +72,10 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<leader>j", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>k", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
@@ -83,6 +84,9 @@ end)
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
+        'Olical/conjure',
+        'guns/vim-sexp',
+        'tpope/vim-sexp-mappings-for-regular-people',
         {
             "ellisonleao/gruvbox.nvim",
             name = "gruvbox",
@@ -149,7 +153,7 @@ require("lazy").setup({
                     ensure_installed = {
                         "vimdoc", "javascript", "typescript", "c", "lua", "rust",
                         "jsdoc", "bash", "elixir", "eex", "heex", "go", "gomod", "gosum",
-                        "gowork"
+                        "gowork", "fennel", "clojure"
                     },
 
                     sync_install = false,
@@ -239,14 +243,14 @@ require("lazy").setup({
                         map("<leader>vrn", function() vim.lsp.buf.rename() end, '')
                         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
-                        vim.api.nvim_create_autocmd("BufWritePre", {
-                            -- 3
-                            buffer = event.buf,
-                            callback = function()
-                                -- 4 + 5
-                                vim.lsp.buf.format { async = false, id = event.data.client_id }
-                            end,
-                        })
+                        --                        vim.api.nvim_create_autocmd("BufWritePre", {
+                        --                            -- 3
+                        --                            buffer = event.buf,
+                        --                            callback = function()
+                        --                                -- 4 + 5
+                        --                                vim.lsp.buf.format { async = false, id = event.data.client_id }
+                        --                            end,
+                        --                        })
                     end,
                 })
 
@@ -263,7 +267,7 @@ require("lazy").setup({
                         "lua_ls",
                         "rust_analyzer",
                         "elixirls",
-                        "tsserver"
+                        "solidity"
                     },
                     handlers = {
                         function(server_name) -- default handler (optional)
