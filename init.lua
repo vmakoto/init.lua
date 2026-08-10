@@ -242,15 +242,6 @@ require("lazy").setup({
                         map("<leader>vrr", function() vim.lsp.buf.references() end, '')
                         map("<leader>vrn", function() vim.lsp.buf.rename() end, '')
                         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-
-                        --                        vim.api.nvim_create_autocmd("BufWritePre", {
-                        --                            -- 3
-                        --                            buffer = event.buf,
-                        --                            callback = function()
-                        --                                -- 4 + 5
-                        --                                vim.lsp.buf.format { async = false, id = event.data.client_id }
-                        --                            end,
-                        --                        })
                     end,
                 })
 
