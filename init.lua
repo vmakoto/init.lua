@@ -267,7 +267,9 @@ require("lazy").setup({
                         "lua_ls",
                         "rust_analyzer",
                         "elixirls",
-                        "solidity"
+                        "solidity",
+                        "clojure_lsp",
+                        "ts_ls"
                     },
                     handlers = {
                         function(server_name) -- default handler (optional)
